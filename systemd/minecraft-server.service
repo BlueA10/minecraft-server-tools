@@ -1,0 +1,21 @@
+[Unit]
+Description=Minecraft Server
+
+Wants=network.target
+After=network.target
+
+[Service]
+User=minecraft-server
+Group=minecraft-server
+Type=simple
+
+ExecStart=/srv/minecraft/bin/start.sh
+ExecStartPost=/srv/minecraft/bin/discord-webhook-arg.sh "```Minecraft Server started.```"
+
+ExecStop=/srv/minecraft/bin/stop.sh
+ExecStopPost=/srv/minecraft/bin/discord-webhook-arg.sh "```Minecraft Server stopped.```"
+
+OOMPolicy=stop
+
+[Install]
+WantedBy=multi-user.target
