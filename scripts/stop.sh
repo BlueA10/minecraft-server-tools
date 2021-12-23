@@ -10,6 +10,9 @@ set -e
 . "$(dirname "$(realpath "${0}")")/common_functions.sh"
 
 # Issue server stop command
-server_cmd "stop"
+server_cmd_wait 'stop' 'Closing Thread Pool'
+
+# Clean up
+rm -rf "${server_tmp_dir}"
 
 exit 0

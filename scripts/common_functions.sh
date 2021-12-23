@@ -18,7 +18,8 @@ server_cmd() { echo "${@}" >"${server_in_pipe}"; }
 # appear in the server's output
 server_cmd_wait() {
         # Setup named pipe
-        local catch_pipe="./catch_pipe"
+        local catch_pipe="${server_tmp_dir}/catch_pipe-$$"
+        [[ -e ${catch_pipe} ]] && rm -f "${catch_pipe}"
         mkfifo "${catch_pipe}"
 
         # Start piping logs to catch_pipe in background
@@ -29,7 +30,7 @@ server_cmd_wait() {
         logger_pid=$!
 
         # Have grep start checking for the string now, and close on first match
-        grep -m 1 -E '^\[[[:digit:]]{2}(:[[:digit:]]{2}){2}\] '"${2}" <"${catch_pipe}" &
+        grep -m 1 -E '^\[.*\]: '"${2}" <"${catch_pipe}" &
 
         # Stores grep's PID
         grep_pid=$!

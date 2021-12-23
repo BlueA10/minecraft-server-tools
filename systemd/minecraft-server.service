@@ -5,15 +5,16 @@ Wants=network.target
 After=network.target
 
 [Service]
-User=minecraft-server
-Group=minecraft-server
-Type=simple
+User=minecraft
+#Group=minecraft
+Type=notify
+NotifyAccess=all
 
 ExecStart=/srv/minecraft/bin/start.sh
-ExecStartPost=/srv/minecraft/bin/discord-webhook-arg.sh "```Minecraft Server started.```"
+ExecStartPost=/srv/minecraft/bin/discord-w-timestamp.sh "Minecraft Server started."
 
 ExecStop=/srv/minecraft/bin/stop.sh
-ExecStopPost=/srv/minecraft/bin/discord-webhook-arg.sh "```Minecraft Server stopped.```"
+ExecStopPost=/srv/minecraft/bin/discord-w-timestamp.sh "Minecraft Server stopped."
 
 OOMPolicy=stop
 

@@ -4,6 +4,7 @@
 
 # Exit on any errors
 #set -e
+set -x
 # (We want this off to ensure auto-saves will be appropriately turned on at
 # the end in the event of any errors. We'll try to handle errors instead.)
 
@@ -17,14 +18,15 @@ server_cmd "say World backup initiated..."
 
 echo "Disabling auto-saves on server."
 server_cmd_wait "save-off" \
-        "\[Server thread/INFO\]: Automatic saving is now disabled"
+        "Automatic saving is now disabled"
 
 echo "Triggering manual save on server."
 server_cmd_wait "save-all" \
-        "\[Server thread/INFO\]: Saved the game"
+        "Saved the game"
 
 # Neccessary envvars for borg
-export BORG_REPO="${server_backup_dir}"
+BORG_REPO="${server_backup_dir}"
+export BORG_REPO
 BORG_PASSPHRASE=$(<"${server_borg_pass_src}")
 export BORG_PASSPHRASE
 
@@ -38,16 +40,18 @@ borg create \
         --list \
         --stats \
         --show-rc \
-        --compression lz4 \
+        --compression zstd \
         --exclude-caches \
-        --exclude "${server_dir}/world/session.lock" \
-        "::{hostname}-world-{utcnow}" \
-        "${server_dir}/world/"
-backup_exit=$?
+        --exclude "${server_dir}/*/session.lock" \
+        "::{hostname}-worlds-{utcnow}" \
+        "${server_dir}/world" \
+        "${server_dir}/world_nether" \
+        "${server_dir}/world_the_end"
+backup_exit="${?}"
 
 echo "Re-enabling auto-saves on server."
 server_cmd_wait "save-on" \
-        "\[Server thread/INFO\]: Automatic saving is now enabled"
+        "Automatic saving is now enabled"
 
 # Prune backups if backup was successful
 if [[ ${backup_exit} -lt 2 ]]; then
