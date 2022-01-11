@@ -70,7 +70,7 @@ fi
 # fi
 
 # TODO: Rewrite to be like above sample once a pruning system is in place.
-global_exit=zfs_exit
+global_exit=${zfs_exit}
 if [[ ${global_exit} -eq 0 ]]; then
         echo "Snapshot process finished successfully."
 else
