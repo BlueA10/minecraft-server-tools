@@ -25,7 +25,7 @@ server_cmd_wait "save-all" \
 
 trap 'echo ZFS snapshot interrupted >&2; exit 3' INT TERM
 
-snapshot_time="$(date -u %FT%R)"
+snapshot_time="$(date -u +%FT%R)"
 zfs snapshot -r "${server_zfs_dataset}@${snapshot_time}"
 zfs_exit=$?
 
