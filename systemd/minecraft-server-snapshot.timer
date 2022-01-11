@@ -1,0 +1,12 @@
+[Unit]
+Description=Minecraft Server ZFS snapshot
+
+Requisite=minecraft-server.service
+PartOf=minecraft-server.service
+After=minecraft-server.service
+
+[Timer]
+OnUnitActiveSec=6h
+
+[Install]
+WantedBy=minecraft-server.service
