@@ -19,6 +19,7 @@
 
 export MINECRAFT_SERVER_COMMON_VARS=true
 
+export server_zfs_dataset="rpool/srv/minecraft"
 export server_dir="${MC_SERVER_DIR:-/srv/minecraft}"
 export server_tmp_dir="${MC_SERVER_TMP_DIR:-/tmp/minecraft}"
 # export server_backup_dir="${MC_SERVER_BACKUP_DIR:-${server_dir}/backup}"
