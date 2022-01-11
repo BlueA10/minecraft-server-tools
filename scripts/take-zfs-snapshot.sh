@@ -4,7 +4,8 @@
 
 # Exit on any errors
 #set -e
-set -x
+# Debug (echo each line)
+#set -x
 # (We want this off to ensure auto-saves will be appropriately turned on at
 # the end in the event of any errors. We'll try to handle errors instead.)
 
