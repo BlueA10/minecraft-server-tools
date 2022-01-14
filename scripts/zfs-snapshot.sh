@@ -19,7 +19,8 @@ snapshot_name="${server_zfs_dataset}@${snapshot_time}"
 zfs snapshot -r "${snapshot_name}"
 zfs_exit=$?
 
-if [[ ${zfs_exit} -eq 0 ]]; then
+if [[ ${zfs_exit} -eq 0 ]]
+then
         snapshot_limit=$(zfs get \
                 -Ho value \
                 snapshot_limit \
@@ -63,7 +64,9 @@ fi
 # fi
 
 global_exit=${zfs_exit}
-if [[ ${global_exit} -eq 0 ]]; then
+if [[ ${global_exit} -eq 0 ]]
+then
+        true
 else
         echo "Snapshot script finished with errors!"
 fi
