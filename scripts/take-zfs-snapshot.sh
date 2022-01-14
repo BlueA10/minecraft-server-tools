@@ -26,10 +26,11 @@ server_cmd_wait "save-all" \
 
 trap 'echo ZFS snapshot interrupted >&2; exit 3' INT TERM
 
-snapshot_time="$(date --utc +%FT%TZ)"
+snapshot_time="$(date --utc +%FT%TZ)" # '%FT%TZ' = 'YYYY-MM-DDTHH:MM:SSZ'
+snapshot_prefix="auto"
 
 # Insert staggered versioning logic here?
-zfs snapshot -r "${server_zfs_dataset}@${snapshot_time}"
+zfs snapshot -r "${server_zfs_dataset}@${snapshot_prefix}-${snapshot_time}"
 zfs_exit=$?
 
 echo "Re-enabling auto-saves on server."
@@ -75,9 +76,9 @@ fi
 # TODO: Rewrite to be like above sample once a pruning system is in place.
 global_exit=${zfs_exit}
 if [[ ${global_exit} -eq 0 ]]; then
-        echo "Snapshot process finished successfully."
+        echo "Snapshot script finished successfully."
 else
-        echo "Snapshot process finished with errors!"
+        echo "Snapshot script finished with errors!"
 fi
 
 exit ${global_exit}
