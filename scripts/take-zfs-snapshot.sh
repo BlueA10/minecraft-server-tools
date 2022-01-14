@@ -26,10 +26,11 @@ server_cmd_wait "save-all" \
 
 trap 'echo ZFS snapshot interrupted >&2; exit 3' INT TERM
 
-snapshot_time="$(date --utc +%FT%TZ)"
+snapshot_time="$(date --utc +%FT%TZ)" # '%FT%TZ' = 'YYYY-MM-DDTHH:MM:SSZ'
+snapshot_prefix="auto"
 
 # Insert staggered versioning logic here?
-zfs snapshot -r "${server_zfs_dataset}@${snapshot_time}"
+zfs snapshot -r "${server_zfs_dataset}@${snapshot_prefix}-${snapshot_time}"
 zfs_exit=$?
 
 echo "Re-enabling auto-saves on server."
