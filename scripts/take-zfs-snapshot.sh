@@ -76,9 +76,9 @@ fi
 # TODO: Rewrite to be like above sample once a pruning system is in place.
 global_exit=${zfs_exit}
 if [[ ${global_exit} -eq 0 ]]; then
-        echo "Snapshot process finished successfully."
+        echo "Snapshot script finished successfully."
 else
-        echo "Snapshot process finished with errors!"
+        echo "Snapshot script finished with errors!"
 fi
 
 exit ${global_exit}
