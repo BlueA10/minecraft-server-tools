@@ -16,7 +16,7 @@ trap 'echo ZFS snapshot interrupted >&2; exit 3' INT TERM
 
 snapshot_time="$(date --utc +%FT%TZ)" # '%FT%TZ' = 'YYYY-MM-DDTHH:MM:SSZ'
 snapshot_name="${server_zfs_dataset}@${snapshot_time}"
-zfs snapshot -r "${snapshot_name}"
+zfs snapshot "${snapshot_name}"
 zfs_exit=$?
 
 if [[ ${zfs_exit} -eq 0 ]]
