@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# zfs-snapshot.sh
+# zfs-snapshot.bash
 
 # Exit on any errors
 #set -e
 # Debug (echo each line)
 #set -x
 
-# shellcheck source=./common_vars.sh
-. "$(dirname "$(realpath "${0}")")/common_vars.sh"
-# shellcheck source=./common_functions.sh
-. "$(dirname "$(realpath "${0}")")/common_functions.sh"
+# shellcheck source=./common_vars.bash
+. "$(dirname "$(realpath "${0}")")/common_vars.bash"
+# shellcheck source=./common_functions.bash
+. "$(dirname "$(realpath "${0}")")/common_functions.bash"
 
 trap 'echo ZFS snapshot interrupted >&2; exit 3' INT TERM
 
@@ -19,8 +19,7 @@ snapshot_name="${server_zfs_dataset}@${snapshot_time}"
 zfs snapshot "${snapshot_name}"
 zfs_exit=$?
 
-if [[ ${zfs_exit} -eq 0 ]]
-then
+if [[ ${zfs_exit} -eq 0 ]]; then
         snapshot_limit=$(zfs get \
                 -Ho value \
                 snapshot_limit \
@@ -30,16 +29,19 @@ then
                 snapshot_count \
                 "${server_zfs_dataset}")
 
-        if [[ "${snapshot_count}" -ge "${snapshot_limit}" ]]
-        then
-                snapshot_list=( $(zfs list \
+        if [[ "${snapshot_count}" -ge "${snapshot_limit}" ]]; then
+                #snapshot_list=( $(zfs list \
+                #        -Ho name \
+                #        -s creation \
+                #        -t snapshot \
+                #        "${server_zfs_dataset}") )
+                mapfile -t snapshot_list < <(zfs list \
                         -Ho name \
                         -s creation \
                         -t snapshot \
-                        "${server_zfs_dataset}") )
+                        "${server_zfs_dataset}")
 
-                if [[ "${snapshot_list[0]}" != "${server_zfs_dataset}" ]]
-                then
+                if [[ "${snapshot_list[0]}" != "${server_zfs_dataset}" ]] ;then
                         zfs destroy "${snapshot_list[0]}"
                 else
                         echo "Snapshot pruning tried to delete base dataset!!!"

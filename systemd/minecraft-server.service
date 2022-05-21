@@ -9,12 +9,11 @@ User=minecraft
 Group=minecraft
 Type=notify
 NotifyAccess=all
-
-ExecStart=/srv/minecraft/bin/start.sh
-
-ExecStop=/srv/minecraft/bin/stop.sh
-
+ExecStart=/srv/minecraft/bin/start-server.bash
+ExecStop=/srv/minecraft/bin/stop-server.bash
 OOMPolicy=stop
+
+RuntimeDirectory=minecraft-server
 
 [Install]
 WantedBy=multi-user.target

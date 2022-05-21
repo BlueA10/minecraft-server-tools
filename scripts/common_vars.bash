@@ -1,4 +1,5 @@
-# common_vars.sh
+#!/usr/bin/env bash
+# common_vars.bash
 # Common variables for server scripts
 # Generally shouldn't be run directly
 
@@ -13,13 +14,13 @@
 #         MC_SERVER_ARGS           - (Array) Server jar arguments
 
 # Include guard
-[[ -n "${MC_SERVER_COMMON_VARS}" ]] && return
-
-export MINECRAFT_SERVER_COMMON_VARS=true
+[[ -n "${MINECRAFT_SERVER_COMMON_VARS}" ]] && return
+MINECRAFT_SERVER_COMMON_VARS=true
 
 export server_zfs_dataset="${MC_SERVER_ZFS_SET:-rpool/srv/minecraft}"
 export server_dir="${MC_SERVER_DIR:-/srv/minecraft}"
-export server_tmp_dir="${MC_SERVER_TMP_DIR:-/tmp/minecraft}"
+# export server_tmp_dir="${MC_SERVER_TMP_DIR:-/tmp/minecraft}"
+export server_tmp_dir="${MC_SERVER_TMP_DIR:-${RUNTIME_DIRECTORY}}"
 export server_jar="${MC_SERVER_JAR:-${server_dir}/paper-server.jar}"
 export server_mem_max="${MC_SERVER_MEM_MAX:-10240}" # 10GiB good start
 export server_in_pipe="${MC_SERVER_IN_PIPE:-${server_tmp_dir}/in_pipe}"
