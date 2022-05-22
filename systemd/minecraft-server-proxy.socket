@@ -1,6 +1,7 @@
 [Socket]
-ListenStream = 25565
-ListenDatagram = 25565
+ListenStream=0.0.0.0:25565
+#ListenDatagram=0.0.0.0:25565
+Transparent=true
 
 Accept=no
 

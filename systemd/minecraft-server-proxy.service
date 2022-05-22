@@ -1,9 +1,7 @@
 [Unit]
 Description=Proxy service for socket-activated Minecraft Server.
+BindsTo=minecraft-server.service
+After=minecraft-server.service
 
 [Service]
-User=minecraft
-Group=minecraft
-ExecStartPre=/usr/bin/systemctl start minecraft-server.service
-ExecStart=/lib/systemd/systemd-socket-proxyd --exit-idle-time=5m 127.0.0.1:25566
-ExecStop=/usr/bin/systemctl stop minecraft-server.service
+ExecStart=/lib/systemd/systemd-socket-proxyd --exit-idle-time=5m localhost:25566
