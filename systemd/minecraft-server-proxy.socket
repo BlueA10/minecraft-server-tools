@@ -1,0 +1,5 @@
+[Socket]
+ListenStream = 25565
+ListenDatagram = 25565
+
+Accept=no

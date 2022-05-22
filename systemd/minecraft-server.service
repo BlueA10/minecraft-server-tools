@@ -15,5 +15,5 @@ OOMPolicy=stop
 
 RuntimeDirectory=minecraft-server
 
-[Install]
-WantedBy=multi-user.target
+#[Install]
+#WantedBy=multi-user.target
