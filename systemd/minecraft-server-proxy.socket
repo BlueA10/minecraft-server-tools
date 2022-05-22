@@ -3,3 +3,6 @@ ListenStream = 25565
 ListenDatagram = 25565
 
 Accept=no
+
+[Install]
+WantedBy=sockets.target
